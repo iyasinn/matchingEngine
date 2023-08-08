@@ -7,9 +7,11 @@ all: trade
 
 # The files we depend on are the pre requisties
 # trade: main ./Order/Order.cpp
-trade:
+trade: 
 	${CC} main.cpp ./Order/Order.cpp -o ${output}.exe
 	./${output}.exe
+
+
 
 debug: 
 	${CC} -g main.cpp ./Order/Order.cpp -o ${output}Debug.exe

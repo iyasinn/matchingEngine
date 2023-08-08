@@ -4,18 +4,25 @@
 
 class Limit {
 public:
-  // Getter and Setter for Next
-  OrderBookEntry *getNext() const { return head; }
-  void setNext(OrderBookEntry *entry) { head = entry; }
+  Limit(long priceIn) : price(priceIn) {}
 
   // Getter and Setter for Previous
-  OrderBookEntry *getPrevious() const { return tail; }
-  void setPrevious(OrderBookEntry *entry) { previous = entry; }
+  OrderBookEntry *getHead() const { return head; }
+  void setHead(OrderBookEntry *entry) { head = tail; }
+
+  OrderBookEntry *getTail() const { return tail; }
+  void setTail(OrderBookEntry *entry) { head = tail; }
+
+  uint getTotalOrders() { return totalOrders; }
+  uint getTotalQuantity() { return totalQuantity; }
+  bool empty() { return head == tail && tail == nullptr; }
+
+  long getPrice() { return price; }
 
 private:
   long price;
-  OrderBookEntry *head;
-  OrderBookEntry *tail;
-  uint totalOrders;
-  uint totalQuantity;
+  OrderBookEntry *head = nullptr;
+  OrderBookEntry *tail = nullptr;
+  uint totalOrders = 0;
+  uint totalQuantity = 0;
 };
