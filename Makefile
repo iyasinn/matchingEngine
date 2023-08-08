@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -g -Wall 
+CFLAGS = -g -Wall
 output = program
 
 .PHONY: all 

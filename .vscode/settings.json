@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/Users/iyasin/Documents/code/coding/projects/matchingEngine",
+            "binaryPath": "/Users/iyasin/Documents/code/coding/projects/matchingEngine/program.exe",
+            "binaryArgs": []
+        }
+    ]
+}
