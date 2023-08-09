@@ -24,8 +24,12 @@ void fifoBstOrderbook::changeOrder(Order order) {
 
 void fifoBstOrderbook::removeOrder(Order order) {}
 
-void fifoBstOrderbook::matchOrders() {}
+void fifoBstOrderbook::matchOrders() { return; }
 
 int fifoBstOrderbook::getCount() { return count; }
-vector<OrderBookEntry> fifoBstOrderbook::getAskOrders() { return {}; }
-vector<OrderBookEntry> fifoBstOrderbook::getBidOrders() { return {}; }
+vector<OrderBookEntry> fifoBstOrderbook::getAskOrders() {
+  return vector<OrderBookEntry>();
+}
+vector<OrderBookEntry> fifoBstOrderbook::getBidOrders() {
+  return vector<OrderBookEntry>();
+}

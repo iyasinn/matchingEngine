@@ -9,7 +9,7 @@ all:
 # trade: main ./Order/Order.cpp
 
 trade: orderbook.o order.o
-	${CC} main.cpp orderbook.o order.o -o ${output}.exe
+	${CC} -Wc++11-extensions main.cpp orderbook.o order.o -o ${output}.exe
 
 debug: orderbook.o order.o
 	${CC} -g main.cpp orderbook.o order.o -o ${output}Debug.exe
