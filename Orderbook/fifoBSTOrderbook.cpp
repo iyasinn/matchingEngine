@@ -6,10 +6,11 @@ using namespace std;
 void fifoBstOrderbook::addOrder(Order order) {
 
   LimitTree limit(order.getPrice());
-  if (buyOrders.find(limit) == buyOrders.end()) {
+  if (buyOrders.find(limit) != buyOrders.end()) {
     cout << "FOUND\n";
   } else {
     buyOrders.insert(limit);
+    cout << "INSERTING\n";
   }
   return;
 }

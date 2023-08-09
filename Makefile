@@ -11,14 +11,15 @@ all:
 trade: orderbook.o order.o
 	${CC} main.cpp orderbook.o order.o -o ${output}.exe
 
+debug: orderbook.o order.o
+	${CC} -g main.cpp orderbook.o order.o -o ${output}Debug.exe
+
 orderbook.o: Orderbook/fifoBSTOrderbook.cpp
-	${CC} -c Orderbook/fifoBSTOrderbook.cpp -o orderbook.o
+	${CC} -g -c Orderbook/fifoBSTOrderbook.cpp -o orderbook.o
 
 order.o: Order/Order.cpp
-	${CC} -c Order/Order.cpp -o order.o
-debug: 
-	${CC} -g main.cpp ./Order/Order.cpp -o ${output}Debug.exe
-
+	${CC} -g -c Order/Order.cpp -o order.o
+	
 .PHONY: clean
 clean: 
 	rm -f *.exe *.o

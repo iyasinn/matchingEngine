@@ -6,7 +6,7 @@
 
 class fifoBstOrderbook : protected IOrderbook {
 public:
-  fifoBstOrderbook();
+  fifoBstOrderbook(std::string securityIn) : IOrderbook(securityIn) {}
   // Make a class to return success of these operations
   void addOrder(Order order) override;
   void changeOrder(Order order) override;
@@ -22,5 +22,5 @@ public:
 private:
   std::set<LimitTree, decltype(BidComparer())> buyOrders;
   std::set<LimitTree, decltype(AskComparer())> askOrders;
-  int count;
+  int count = 0;
 };

@@ -5,6 +5,7 @@
 
 class IOrderbook {
 public:
+  IOrderbook(std::string securityIn) : security(securityIn) {}
   // Make a class to return success of these operations
   virtual void addOrder(Order order) = 0;
   virtual void changeOrder(Order order) = 0;
