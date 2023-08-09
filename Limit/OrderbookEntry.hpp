@@ -1,34 +1,17 @@
 #pragma once
 #include "../Order/Order.hpp"
 #include <ctime>
-#include <iostream>
 
-// Forward declare Limit so we can use it
-class Limit;
-
+// Generic Orderbook
 class OrderBookEntry {
 public:
-  // Getter and Setter for CurrentOrder
-  const Order &getCurrentOrder() const { return currentOrder; }
-
-  // Getter for CreationTime
-  const std::time_t &getCreationTime() const { return creationTime; }
-
-  // Getter and Setter for ParentLimit
-  Limit *const getParentLimit() const { return parentLimit; }
-
-  // Getter and Setter for Next
-  OrderBookEntry *getNext() const { return next; }
-  void setNext(OrderBookEntry *entry) { next = entry; }
-
-  // Getter and Setter for Previous
-  OrderBookEntry *getPrevious() const { return previous; }
-  void setPrevious(OrderBookEntry *entry) { previous = entry; }
+  OrderBookEntry(Order orderIn) : order(orderIn), creationTime(time(NULL)) {}
+  OrderBookEntry(Order orderIn, std::time_t timeIn)
+      : order(orderIn), creationTime(timeIn) {}
+  const Order getOrder() { return order; }
+  const time_t getCreationTime() { return creationTime; }
 
 private:
-  Order currentOrder;
-  std::time_t creationTime;
-  Limit *parentLimit;
-  OrderBookEntry *next;
-  OrderBookEntry *previous;
+  Order order;
+  const std::time_t creationTime;
 };
