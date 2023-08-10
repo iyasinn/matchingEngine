@@ -25,13 +25,10 @@ int main() {
       Order(OrderCore(orderId++, username, securityId), 20, 100, sellSide));
 
   // PRINTING RNADOM
-  orderbook.changeOrder(
-      Order(OrderCore(orderId, username, securityId), 18, 100, sellSide));
-
+  orderbook.printOrders();
   // REMOVE 17
-  orderbook.removeOrder(
-      Order(OrderCore(orderId - 2, username, securityId), 17, 100, sellSide));
-
   orderbook.changeOrder(
-      Order(OrderCore(orderId, username, securityId), 18, 100, sellSide));
+      Order(OrderCore(orderId - 2, username, securityId), 20, 50, sellSide));
+
+  orderbook.printOrders();
 }

@@ -27,7 +27,7 @@ void fifoBstOrderbook::addOrder(Order order) {
 
   if (limit.empty()) {
     limit.head() = limit.tail() = entry;
-  } else if (limit.getTotalQuantity() == 1) {
+  } else {
     limit.tail()->next = entry;
     entry->prev = limit.tail();
     limit.tail() = entry;
@@ -54,7 +54,7 @@ void fifoBstOrderbook::removeOrder(Order order) {
     entry->next->prev = entry->prev;
   } else if (entry->prev) {
     entry->prev->next = nullptr;
-    parentLimit->tail() = entry;
+    parentLimit->tail() = entry->prev;
   } else if (entry->next) {
     entry->next->prev = nullptr;
     parentLimit->head() = entry->next;
@@ -80,6 +80,15 @@ void fifoBstOrderbook::removeOrder(Order order) {
 }
 
 void fifoBstOrderbook::changeOrder(Order order) {
+  if (orders.find(order.getOrderId()) == orders.end()) {
+    cout << "Order doesn't exist\n";
+    return;
+  }
+  removeOrder(order);
+  addOrder(order);
+}
+
+void fifoBstOrderbook::printOrders() {
   cout << "PRINTING\n";
   for (auto p : orders) {
     auto entry = p.second;

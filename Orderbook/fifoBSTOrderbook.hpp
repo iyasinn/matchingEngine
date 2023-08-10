@@ -19,6 +19,7 @@ public:
   bool empty() override { return count == 0; }
   std::vector<OrderBookEntry> getAskOrders() override;
   std::vector<OrderBookEntry> getBidOrders() override;
+  void printOrders();
 
 private:
   std::map<long, OrderBookEntryTree *> orders;
