@@ -10,6 +10,8 @@ public:
     securityId = securityIdIn;
   }
 
+  ~OrderCore() {}
+
   long getOrderId() const override { return orderId; }
   std::string getUsername() const override { return username; }
   int getSecurityId() const override { return securityId; }

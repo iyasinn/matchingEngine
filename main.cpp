@@ -8,17 +8,30 @@ using namespace std;
 int main() {
 
   fifoBstOrderbook orderbook("Apple");
+  int orderId = 1;
+  string username = "shadowIo";
+  long securityId = 10;
 
-  orderbook.addOrder(Order(new OrderCore(10, "shadowio", 15), 30, 100, true));
+  bool buySide = true;
+  bool sellSide = false;
 
-  orderbook.addOrder(Order(new OrderCore(10, "shadowio", 15), 25, 100, true));
+  orderbook.addOrder(
+      Order(OrderCore(orderId++, username, securityId), 18, 100, buySide));
+  orderbook.addOrder(
+      Order(OrderCore(orderId++, username, securityId), 17, 100, sellSide));
+  orderbook.addOrder(
+      Order(OrderCore(orderId++, username, securityId), 17, 100, sellSide));
+  orderbook.addOrder(
+      Order(OrderCore(orderId++, username, securityId), 20, 100, sellSide));
 
-  orderbook.addOrder(Order(new OrderCore(10, "shadowio", 15), 10, 100, true));
+  // PRINTING RNADOM
+  orderbook.changeOrder(
+      Order(OrderCore(orderId, username, securityId), 18, 100, sellSide));
 
-  orderbook.addOrder(Order(new OrderCore(10, "shadowio", 15), 10, 100, true));
-
-  orderbook.addOrder(Order(new OrderCore(10, "shadowio", 15), 10, 100, true));
+  // REMOVE 17
+  orderbook.removeOrder(
+      Order(OrderCore(orderId - 2, username, securityId), 17, 100, sellSide));
 
   orderbook.changeOrder(
-      Order(new OrderCore(10, "shadowio", 15), 30, 100, true));
+      Order(OrderCore(orderId, username, securityId), 18, 100, sellSide));
 }

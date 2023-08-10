@@ -7,6 +7,7 @@ class OrderBookEntryTree;
 
 class LimitTree : public ILimit {
 public:
+  LimitTree() : ILimit(0) {}
   LimitTree(long priceIn) : ILimit(priceIn) {}
   // Interface functions
   uint getTotalOrders() { return totalOrders; }
@@ -16,8 +17,9 @@ public:
   bool empty() { return headPointer == tailPointer && tailPointer == nullptr; }
 
   // Member specific functions
-  OrderBookEntryTree *head() const { return headPointer; }
-  OrderBookEntryTree *tail() const { return tailPointer; }
+  // Reference to pointer lets us actually change the pointer itself
+  OrderBookEntryTree *&head() { return headPointer; }
+  OrderBookEntryTree *&tail() { return tailPointer; }
 
 private:
   OrderBookEntryTree *headPointer = nullptr;
@@ -26,9 +28,10 @@ private:
   uint totalQuantity = 0;
 };
 
-class OrderBookEntryTree : OrderBookEntry {
+class OrderBookEntryTree : public OrderBookEntry {
 public:
-  OrderBookEntryTree(Order orderIn) : OrderBookEntry(orderIn) {}
+  OrderBookEntryTree(Order orderIn, LimitTree *parentLimitIn)
+      : OrderBookEntry(orderIn), parentLimit(parentLimitIn) {}
   LimitTree *getParentLimit() { return parentLimit; }
   OrderBookEntryTree *next;
   OrderBookEntryTree *prev;
