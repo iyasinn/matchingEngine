@@ -105,6 +105,7 @@ int fifoBstOrderbook::getCount() { return count; }
 vector<OrderBookEntry> fifoBstOrderbook::getAskOrders() {
   return vector<OrderBookEntry>();
 }
+
 vector<OrderBookEntry> fifoBstOrderbook::getBidOrders() {
   return vector<OrderBookEntry>();
 }

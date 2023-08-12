@@ -12,11 +12,11 @@ run: ${output}.exe
 	./${output}.exe
 
 trade: orderbook.o order.o
-	${CC} main.cpp orderbook.o order.o -o ${output}.exe
+	${CC} main.cpp orderbook.o order.o -o ${output}.exe -lcurl
 	./${output}.exe
 
 debug: orderbook.o order.o
-	${CC} -g main.cpp orderbook.o order.o -o ${output}Debug.exe
+	${CC} -g main.cpp orderbook.o order.o -o ${output}Debug.exe -lcurl
 
 orderbook.o: Orderbook/fifoBSTOrderbook.cpp
 	${CC} -g -c Orderbook/fifoBSTOrderbook.cpp -o orderbook.o
