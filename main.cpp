@@ -9,7 +9,7 @@ using namespace std;
 int main() {
 
   KrakenData k("Bobby", 10);
-  k.makeRequest();
+  k.getOrders();
 
   //   fifoBstOrderbook orderbook("Apple");
   //   int orderId = 1;

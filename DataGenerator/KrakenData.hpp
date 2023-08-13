@@ -2,54 +2,75 @@
 #include <ctime>
 #include <curl/curl.h>
 #include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct KrakenOrder {
+  int name;
+  time_t timeCreated;
+  double price;
+  double volume;
+  bool isBuySide;
+  bool limitOrder;
+};
+
 class KrakenData {
 
 public:
   KrakenData(std::string securityIn, uint numOrdersIn)
       : security(securityIn), numOrders(numOrdersIn) {}
 
-  void makeRequest() {
-    std::cout << numOrders << std::endl;
-    CURL *curl = curl_easy_init();
-    if (!curl) {
-      std::cout << "Failed to initialize cURL\n";
-      return;
-    }
+  std::vector<KrakenOrder> getOrders() {
 
-    std::string responseBuffer;
-    // Set the URL and write callback function
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &responseBuffer);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION,
-                     WriteCallback); // Uncomment this line if needed
+    std::string jsonString = makeRequest();
+    nlohmann::json data = nlohmann::json::parse(jsonString);
+    auto orders = data["result"]["XXBTZUSD"];
+    double order = stod(string(orders[0][0]));
+    std::cout << order << std::endl;
 
-    CURLcode res = curl_easy_perform(curl);
-    if (res != CURLE_OK) {
-      std::cerr << "cURL request failed: " << curl_easy_strerror(res)
-                << std::endl;
-      curl_easy_cleanup(curl);
-      return;
-    }
-
-    curl_easy_cleanup(curl);
-
-    // Parse JSON response
-    using json = nlohmann::json;
-
-    try {
-      json jsonData = json::parse(responseBuffer);
-      std::string value = jsonData["key"];
-      std::cout << "Value from JSON: " << value << std::endl;
-    } catch (const std::exception &e) {
-      std::cerr << "JSON parsing error: " << e.what() << std::endl;
-      return;
-    }
+    // std::string lastValue = data["last"];
+    // std::cout << lastValue;
+    return {};
   }
 
+  auto handleOrder(auto order) {}
+
+private:
   // const std::string url = "https://api.kraken.com/0/public/Trades?";
-  std::string url = "https://api.kraken.com/0/public/Trades?pair=XBTUSD";
+  std::string url =
+      "https://api.kraken.com/0/public/Trades?pair=XBTUSD&count=10";
 
   std::string security;
   uint numOrders;
+
+  static size_t WriteCallback(void *contents, size_t size, size_t nmemb,
+                              void *userp) {
+    ((std::string *)userp)->append((char *)contents, size * nmemb);
+    return size * nmemb;
+  }
+
+  std::string makeRequest() {
+    CURL *curl;
+    CURLcode res = CURLcode();
+    std::string readBuffer;
+
+    curl = curl_easy_init();
+    if (curl) {
+      curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+      curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+      curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+      res = curl_easy_perform(curl);
+      curl_easy_cleanup(curl);
+    }
+
+    if (res != 0) {
+      std::cerr << "Error getting trades\n";
+    }
+
+    return readBuffer;
+  }
+
+  KrakenOrder createOrder() { return KrakenOrder(); }
   // std::time_t lastTime;
 };
